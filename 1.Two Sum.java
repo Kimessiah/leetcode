@@ -17,8 +17,8 @@ public int[] twoSum(int[] numbers, int target) {
 // O(nlogn) with sorting
 public int[] twoSum(int[] numbers, int target) {
 
-	int [] sorted = new int[numbers.length];
-	System.arraycopy(numbers, 0, sorted, numbers.length);
+	int[] sorted = new int[numbers.length];
+	System.arraycopy(numbers, 0, sorted, 0, numbers.length);
 	Arrays.sort(sorted);
 	int start = 0;
 	int end = sorted.length - 1;
@@ -29,15 +29,26 @@ public int[] twoSum(int[] numbers, int target) {
 		int sum = sorted[start] + sorted[end];
 		if (sum < target) {
 			start++;
-		} elseif (sum > target) {
+		} else if (sum > target) {
 			end--;
 		} else {
 			number1 = sorted[start];
 			number2 = sorted[end];
+			break;
 		}
 	}
 
-	
+	for (int i=0; i<numbers.length; i++) {
+		if (index1 == -1 && numbers[i] == number1) {
+			index1 = i+1;
+		} else if (index2 == -1 && numbers[i] == number2) {
+			index2 = i+1;
+		}
+	}
 
-	return null;
+	if (index1 < index2) {
+		return new int[]{index1, index2};
+	} else {
+		return new int[]{index2, index1};
+	}
 }
